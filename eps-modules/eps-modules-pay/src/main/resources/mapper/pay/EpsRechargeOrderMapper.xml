@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eps.pay.mapper.EpsRechargeOrderMapper">
+    
+    <resultMap type="EpsRechargeOrder" id="EpsRechargeOrderResult">
+        <result property="id"    column="id"    />
+        <result property="returnCode"    column="return_code"    />
+        <result property="totalFee"    column="total_fee"    />
+        <result property="outTradeNo"    column="out_trade_no"    />
+        <result property="payjsOrderId"    column="payjs_order_id"    />
+        <result property="transactionId"    column="transaction_id"    />
+        <result property="paidTime"    column="paid_time"    />
+        <result property="userId"    column="user_id"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="status"    column="status"    />
+    </resultMap>
+
+    <sql id="selectEpsRechargeOrderVo">
+        select id, return_code, total_fee, out_trade_no, payjs_order_id, transaction_id, paid_time, user_id, create_time, status from eps_recharge_order
+    </sql>
+
+    <select id="selectEpsRechargeOrderList" parameterType="EpsRechargeOrder" resultMap="EpsRechargeOrderResult">
+        <include refid="selectEpsRechargeOrderVo"/>
+        <where>  
+            <if test="returnCode != null"> and return_code = #{returnCode}</if>
+            <if test="totalFee != null"> and total_fee = #{totalFee}</if>
+            <if test="outTradeNo != null  and outTradeNo != ''"> and out_trade_no = #{outTradeNo}</if>
+            <if test="payjsOrderId != null  and payjsOrderId != ''"> and payjs_order_id = #{payjsOrderId}</if>
+            <if test="transactionId != null  and transactionId != ''"> and transaction_id = #{transactionId}</if>
+            <if test="paidTime != null"> and paid_time = #{paidTime}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="status != null "> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectEpsRechargeOrderById" parameterType="Long" resultMap="EpsRechargeOrderResult">
+        <include refid="selectEpsRechargeOrderVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertEpsRechargeOrder" parameterType="EpsRechargeOrder" useGeneratedKeys="true" keyProperty="id">
+        insert into eps_recharge_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="returnCode != null">return_code,</if>
+            <if test="totalFee != null">total_fee,</if>
+            <if test="outTradeNo != null">out_trade_no,</if>
+            <if test="payjsOrderId != null and payjsOrderId != ''">payjs_order_id,</if>
+            <if test="transactionId != null and transactionId != ''">transaction_id,</if>
+            <if test="paidTime != null">paid_time,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="status != null">status,</if>
+         </trim>
+        <trim prefix="select " suffixOverrides=",">
+            <if test="returnCode != null">#{returnCode},</if>
+            <if test="totalFee != null">#{totalFee},</if>
+            <if test="outTradeNo != null">#{outTradeNo},</if>
+            <if test="payjsOrderId != null and payjsOrderId != ''">#{payjsOrderId},</if>
+            <if test="transactionId != null and transactionId != ''">#{transactionId},</if>
+            <if test="paidTime != null">#{paidTime},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="status != null">#{status},</if>
+         </trim>
+        <if test="payjsOrderId != null and payjsOrderId != ''">
+        FROM
+        DUAL
+        WHERE
+        NOT EXISTS (
+        SELECT
+        payjs_order_id
+        FROM
+        `eps_recharge_order`
+        WHERE
+        payjs_order_id = #{payjsOrderId}
+        )
+        </if>
+    </insert>
+
+    <update id="updateEpsRechargeOrder" parameterType="EpsRechargeOrder">
+        update eps_recharge_order
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="returnCode != null">return_code = #{returnCode},</if>
+            <if test="totalFee != null">total_fee = #{totalFee},</if>
+            <if test="outTradeNo != null">out_trade_no = #{outTradeNo},</if>
+            <if test="payjsOrderId != null and payjsOrderId != ''">payjs_order_id = #{payjsOrderId},</if>
+            <if test="transactionId != null and transactionId != ''">transaction_id = #{transactionId},</if>
+            <if test="paidTime != null">paid_time = #{paidTime},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="status != null">status = #{status},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteEpsRechargeOrderById" parameterType="Long">
+        delete from eps_recharge_order where id = #{id}
+    </delete>
+
+    <delete id="deleteEpsRechargeOrderByIds" parameterType="String">
+        delete from eps_recharge_order where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

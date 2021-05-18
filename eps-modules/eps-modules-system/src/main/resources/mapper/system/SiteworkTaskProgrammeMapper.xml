@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eps.system.mapper.SiteworkTaskProgrammeMapper">
+    
+    <resultMap type="SiteworkTaskProgramme" id="SiteworkTaskProgrammeResult">
+        <result property="objId"    column="obj_id"    />
+        <result property="planNo"    column="plan_no"    />
+        <result property="planType"    column="plan_type"    />
+        <result property="planVersion"    column="plan_version"    />
+        <result property="surveyNo"    column="survey_no"    />
+        <result property="repairRange"    column="repair_range"    />
+        <result property="repairStartTime"    column="repair_start_time"    />
+        <result property="repairEndTime"    column="repair_end_time"    />
+        <result property="powercutStartTime"    column="powercut_start_time"    />
+        <result property="powercutEndTime"    column="powercut_end_time"    />
+        <result property="ordinaryRepairItems"    column="ordinary_repair_items"    />
+        <result property="specialRepairItems"    column="special_repair_items"    />
+        <result property="technicalItems"    column="technical_items"    />
+        <result property="defectTreatmentItems"    column="defect_treatment_items"    />
+        <result property="organizationMeasure"    column="organization_measure"    />
+        <result property="securityMeasure"    column="security_measure"    />
+        <result property="technologyMeasure"    column="technology_measure"    />
+        <result property="progressControlMeasure"    column="progress_control_measure"    />
+        <result property="standardWorkNumber"    column="standard_work_number"    />
+        <result property="repairCheckNumber"    column="repair_check_number"    />
+    </resultMap>
+
+    <sql id="selectSiteworkTaskProgrammeVo">
+        select obj_id, plan_no, plan_type, plan_version, survey_no, repair_range, repair_start_time, repair_end_time, powercut_start_time, powercut_end_time, ordinary_repair_items, special_repair_items, technical_items, defect_treatment_items, organization_measure, security_measure, technology_measure, progress_control_measure, standard_work_number, repair_check_number from t_ds_sitework_task_programme
+    </sql>
+
+    <select id="selectSiteworkTaskProgrammeList" parameterType="SiteworkTaskProgramme" resultMap="SiteworkTaskProgrammeResult">
+        <include refid="selectSiteworkTaskProgrammeVo"/>
+        <where>  
+            <if test="planNo != null  and planNo != ''"> and plan_no = #{planNo}</if>
+            <if test="planType != null  and planType != ''"> and plan_type = #{planType}</if>
+            <if test="surveyNo != null  and surveyNo != ''"> and survey_no = #{surveyNo}</if>
+        </where>
+    </select>
+    
+    <select id="selectSiteworkTaskProgrammeById" parameterType="String" resultMap="SiteworkTaskProgrammeResult">
+        <include refid="selectSiteworkTaskProgrammeVo"/>
+        where obj_id = #{objId}
+    </select>
+        
+    <insert id="insertSiteworkTaskProgramme" parameterType="SiteworkTaskProgramme">
+        insert into t_ds_sitework_task_programme
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="objId != null">obj_id,</if>
+            <if test="planNo != null">plan_no,</if>
+            <if test="planType != null">plan_type,</if>
+            <if test="planVersion != null">plan_version,</if>
+            <if test="surveyNo != null">survey_no,</if>
+            <if test="repairRange != null">repair_range,</if>
+            <if test="repairStartTime != null">repair_start_time,</if>
+            <if test="repairEndTime != null">repair_end_time,</if>
+            <if test="powercutStartTime != null">powercut_start_time,</if>
+            <if test="powercutEndTime != null">powercut_end_time,</if>
+            <if test="ordinaryRepairItems != null">ordinary_repair_items,</if>
+            <if test="specialRepairItems != null">special_repair_items,</if>
+            <if test="technicalItems != null">technical_items,</if>
+            <if test="defectTreatmentItems != null">defect_treatment_items,</if>
+            <if test="organizationMeasure != null">organization_measure,</if>
+            <if test="securityMeasure != null">security_measure,</if>
+            <if test="technologyMeasure != null">technology_measure,</if>
+            <if test="progressControlMeasure != null">progress_control_measure,</if>
+            <if test="standardWorkNumber != null">standard_work_number,</if>
+            <if test="repairCheckNumber != null">repair_check_number,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="objId != null">#{objId},</if>
+            <if test="planNo != null">#{planNo},</if>
+            <if test="planType != null">#{planType},</if>
+            <if test="planVersion != null">#{planVersion},</if>
+            <if test="surveyNo != null">#{surveyNo},</if>
+            <if test="repairRange != null">#{repairRange},</if>
+            <if test="repairStartTime != null">#{repairStartTime},</if>
+            <if test="repairEndTime != null">#{repairEndTime},</if>
+            <if test="powercutStartTime != null">#{powercutStartTime},</if>
+            <if test="powercutEndTime != null">#{powercutEndTime},</if>
+            <if test="ordinaryRepairItems != null">#{ordinaryRepairItems},</if>
+            <if test="specialRepairItems != null">#{specialRepairItems},</if>
+            <if test="technicalItems != null">#{technicalItems},</if>
+            <if test="defectTreatmentItems != null">#{defectTreatmentItems},</if>
+            <if test="organizationMeasure != null">#{organizationMeasure},</if>
+            <if test="securityMeasure != null">#{securityMeasure},</if>
+            <if test="technologyMeasure != null">#{technologyMeasure},</if>
+            <if test="progressControlMeasure != null">#{progressControlMeasure},</if>
+            <if test="standardWorkNumber != null">#{standardWorkNumber},</if>
+            <if test="repairCheckNumber != null">#{repairCheckNumber},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSiteworkTaskProgramme" parameterType="SiteworkTaskProgramme">
+        update t_ds_sitework_task_programme
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="planNo != null">plan_no = #{planNo},</if>
+            <if test="planType != null">plan_type = #{planType},</if>
+            <if test="planVersion != null">plan_version = #{planVersion},</if>
+            <if test="surveyNo != null">survey_no = #{surveyNo},</if>
+            <if test="repairRange != null">repair_range = #{repairRange},</if>
+            <if test="repairStartTime != null">repair_start_time = #{repairStartTime},</if>
+            <if test="repairEndTime != null">repair_end_time = #{repairEndTime},</if>
+            <if test="powercutStartTime != null">powercut_start_time = #{powercutStartTime},</if>
+            <if test="powercutEndTime != null">powercut_end_time = #{powercutEndTime},</if>
+            <if test="ordinaryRepairItems != null">ordinary_repair_items = #{ordinaryRepairItems},</if>
+            <if test="specialRepairItems != null">special_repair_items = #{specialRepairItems},</if>
+            <if test="technicalItems != null">technical_items = #{technicalItems},</if>
+            <if test="defectTreatmentItems != null">defect_treatment_items = #{defectTreatmentItems},</if>
+            <if test="organizationMeasure != null">organization_measure = #{organizationMeasure},</if>
+            <if test="securityMeasure != null">security_measure = #{securityMeasure},</if>
+            <if test="technologyMeasure != null">technology_measure = #{technologyMeasure},</if>
+            <if test="progressControlMeasure != null">progress_control_measure = #{progressControlMeasure},</if>
+            <if test="standardWorkNumber != null">standard_work_number = #{standardWorkNumber},</if>
+            <if test="repairCheckNumber != null">repair_check_number = #{repairCheckNumber},</if>
+        </trim>
+        where obj_id = #{objId}
+    </update>
+
+    <delete id="deleteSiteworkTaskProgrammeById" parameterType="String">
+        delete from t_ds_sitework_task_programme where obj_id = #{objId}
+    </delete>
+
+    <delete id="deleteSiteworkTaskProgrammeByIds" parameterType="String">
+        delete from t_ds_sitework_task_programme where obj_id in 
+        <foreach item="objId" collection="array" open="(" separator="," close=")">
+            #{objId}
+        </foreach>
+    </delete>
+    
+</mapper>

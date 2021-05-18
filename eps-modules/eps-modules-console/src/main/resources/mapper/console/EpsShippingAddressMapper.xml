@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eps.console.mapper.EpsShippingAddressMapper">
+
+    <resultMap type="EpsShippingAddress" id="EpsShippingAddressResult">
+        <result property="id"    column="id"    />
+        <result property="fullName"    column="full_name"    />
+        <result property="shopName"    column="shop_name"    />
+        <result property="shopWangwang"    column="shop_wangwang"    />
+        <result property="phone"    column="phone"    />
+        <result property="province"    column="province"    />
+        <result property="city"    column="city"    />
+        <result property="area"    column="area"    />
+        <result property="addressLine"    column="address_line"    />
+        <result property="hasDelete"    column="has_delete"    />
+        <result property="hasDefault"    column="has_default"    />
+        <result property="userId"    column="user_id"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectEpsShippingAddressVo">
+        select id, full_name, shop_name, shop_wangwang, phone, province, city, area, address_line, has_delete, has_default, user_id, create_time, update_time from eps_shipping_address
+    </sql>
+
+    <select id="selectEpsShippingAddressList" parameterType="EpsShippingAddress" resultMap="EpsShippingAddressResult">
+        <include refid="selectEpsShippingAddressVo"/>
+        <where>
+            <if test="fullName != null  and fullName != ''"> and full_name like concat('%', #{fullName}, '%')</if>
+            <if test="shopName != null  and shopName != ''"> and shop_name like concat('%', #{shopName}, '%')</if>
+            <if test="shopWangwang != null  and shopWangwang != ''"> and shop_wangwang = #{shopWangwang}</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
+            <if test="province != null  and province != ''"> and province = #{province}</if>
+            <if test="city != null  and city != ''"> and city = #{city}</if>
+            <if test="area != null  and area != ''"> and area = #{area}</if>
+            <if test="addressLine != null  and addressLine != ''"> and address_line = #{addressLine}</if>
+            <if test="hasDelete != null and hasDelete != ''"> and has_delete = #{hasDelete}</if>
+            <if test="hasDefault != null and hasDefault != ''"> and has_default = #{hasDefault}</if>
+            <if test="userId != null"> and user_id = #{userId}</if>
+        </where>
+         order by has_default desc
+    </select>
+
+    <select id="selectEpsShippingAddressById" parameterType="Long" resultMap="EpsShippingAddressResult">
+        <include refid="selectEpsShippingAddressVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertEpsShippingAddress" parameterType="EpsShippingAddress" useGeneratedKeys="true" keyProperty="id">
+        insert into eps_shipping_address
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fullName != null and fullName != ''">full_name,</if>
+            <if test="shopName != null">shop_name,</if>
+            <if test="shopWangwang != null">shop_wangwang,</if>
+            <if test="phone != null and phone != ''">phone,</if>
+            <if test="province != null and province != ''">province,</if>
+            <if test="city != null and city != ''">city,</if>
+            <if test="area != null and area != ''">area,</if>
+            <if test="addressLine != null and addressLine != ''">address_line,</if>
+            <if test="hasDelete != null and hasDelete != ''">has_delete,</if>
+            <if test="hasDefault != null and hasDefault != ''">has_default,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fullName != null and fullName != ''">#{fullName},</if>
+            <if test="shopName != null">#{shopName},</if>
+            <if test="shopWangwang != null">#{shopWangwang},</if>
+            <if test="phone != null and phone != ''">#{phone},</if>
+            <if test="province != null and province != ''">#{province},</if>
+            <if test="city != null and city != ''">#{city},</if>
+            <if test="area != null and area != ''">#{area},</if>
+            <if test="addressLine != null and addressLine != ''">#{addressLine},</if>
+            <if test="hasDelete != null and hasDelete != ''">#{hasDelete},</if>
+            <if test="hasDefault != null and hasDefault != ''">#{hasDefault},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateEpsShippingAddress" parameterType="EpsShippingAddress">
+        update eps_shipping_address
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="fullName != null and fullName != ''">full_name = #{fullName},</if>
+            <if test="shopName != null">shop_name = #{shopName},</if>
+            <if test="shopWangwang != null">shop_wangwang = #{shopWangwang},</if>
+            <if test="phone != null and phone != ''">phone = #{phone},</if>
+            <if test="province != null and province != ''">province = #{province},</if>
+            <if test="city != null and city != ''">city = #{city},</if>
+            <if test="area != null and area != ''">area = #{area},</if>
+            <if test="addressLine != null and addressLine != ''">address_line = #{addressLine},</if>
+            <if test="hasDelete != null and hasDelete != ''">has_delete = #{hasDelete},</if>
+            <if test="hasDefault != null and hasDefault != ''">has_default = #{hasDefault},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <update id="batchUpdateDefaultAddress" parameterType="EpsShippingAddress">
+        UPDATE eps_shipping_address
+        SET has_default = '0'
+        WHERE
+            1 = 1
+        AND user_id = #{userId}
+        AND id != #{id}
+    </update>
+
+    <delete id="deleteEpsShippingAddressById" parameterType="Long">
+        delete from eps_shipping_address where id = #{id}
+    </delete>
+
+    <delete id="deleteEpsShippingAddressByIds" parameterType="String">
+        delete from eps_shipping_address where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

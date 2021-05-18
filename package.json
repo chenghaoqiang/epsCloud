@@ -1,0 +1,20 @@
+{
+  "name": "epsCloud",
+  "version": "1.0.0",
+  "description": "* 采用前后端分离的模式，微服务版本前端\r * 后端采用Spring Boot、Spring Cloud & Alibaba。\r * 注册中心、配置中心选型Nacos，权限认证使用Redis。\r * 流量控制框架选型Sentinel。",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mgsong2020/epsCloud.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mgsong2020/epsCloud/issues"
+  },
+  "homepage": "https://github.com/mgsong2020/epsCloud#readme"
+}

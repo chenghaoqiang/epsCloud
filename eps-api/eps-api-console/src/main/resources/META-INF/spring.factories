@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.eps.system.api.factory.RemoteUserFallbackFactory,\
+  com.eps.system.api.factory.RemoteLogFallbackFactory

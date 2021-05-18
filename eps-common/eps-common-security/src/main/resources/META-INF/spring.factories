@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.eps.common.security.service.TokenService,\
+  com.eps.common.security.aspect.PreAuthorizeAspect,\
+  com.eps.common.security.handler.GlobalExceptionHandler
